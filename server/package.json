@@ -1,0 +1,26 @@
+{
+  "name": "estatesolutionweb",
+  "version": "1.0.0",
+  "description": "Estate solutions is a website for the real state property dealers and buyers to put up a property, look for new properties contact the respective buyers /sellers.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sidd-2203/Estate-Solutions-Web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sidd-2203/Estate-Solutions-Web/issues"
+  },
+  "homepage": "https://github.com/sidd-2203/Estate-Solutions-Web#readme",
+  "dependencies": {
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.1"
+  }
+}
