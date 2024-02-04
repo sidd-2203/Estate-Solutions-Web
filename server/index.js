@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
+import { listingRouter } from "./routes/listing.route.js";
 
 dotenv.config();
 const app = express();
@@ -13,6 +14,8 @@ app.use(cookieParser());
 
 app.use("/api/user", userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/listing', listingRouter);
+
 
 // global catch
 // error handling middleware
