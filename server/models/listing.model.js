@@ -13,7 +13,7 @@ const ListingSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    price: {
+    regularPrice: {
         type: Number,
         required: true,
     },
@@ -49,7 +49,7 @@ const ListingSchema = new mongoose.Schema({
         type: Array,
         required: true,
     },
-    userRed: {
+    userRef: {
         type: Schema.Types.ObjectId, ref: 'user',
         required: true,
     }
