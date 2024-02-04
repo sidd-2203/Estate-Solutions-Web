@@ -18,10 +18,10 @@ export const updateUser = async (req, res) => {
                 avatar: req.body.avatar,
             }
         }, { new: true }); // returns the updated user info in response
-        const { password, ...rest } = updateUser._doc;
-        res.status(200).json(rest);
+        const { password, ...rest } = updatedUser._doc;
+        res.status(200).json({ ...rest, success: true });
     }
     catch (err) {
-        next(errorHandler(500, "Something went wrong!!"));
+        next(err);
     }
 }

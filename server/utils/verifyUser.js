@@ -4,7 +4,7 @@ import { errorHandler } from "./error.js";
 export const verifyToken = (req, res, next) => {
     const token = req.cookies.access_token;
     if (!token) {
-        return next(new errorHandler(401, "Unauthorized"));
+        return next(errorHandler(401, "Unauthorized"));
     }
     try {
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
@@ -13,6 +13,7 @@ export const verifyToken = (req, res, next) => {
             next();
         })
     } catch (error) {
-        next(errorHandler(500, "Cannot verify token"));
+        // console.log(err);
+        next(error);
     }
 }

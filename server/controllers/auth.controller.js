@@ -37,7 +37,7 @@ export const signIn = async (req, res, next) => {
     }
 }
 export const googleSignIn = async (req, res, next) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { username, email, photo } = req.body;
     try {
         const finalname = username.split(' ').join("").toLowerCase() + Math.random().toString(36).slice(-4);
