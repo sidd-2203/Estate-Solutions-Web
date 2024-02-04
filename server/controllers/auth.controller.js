@@ -58,7 +58,7 @@ export const googleSignIn = async (req, res, next) => {
             const generatePassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
             const hashedPassword = bcryptjs.hashSync(generatePassword, 10);
             const newUser = new User({ username: finalname, email, password: hashedPassword, avatar: photo });
-            await newUser.save();
+            const user = await newUser.save();
             const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = user._doc;
             res.cookie('access_token',
