@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDownloadURL, getStorage, list, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../firebase';
@@ -17,6 +17,7 @@ export default function Profile() {
     const dispatch = useDispatch();
     const [showListingsError, setShowListingsError] = useState(false);
     const [listings, setListings] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (file) {
@@ -120,8 +121,27 @@ export default function Profile() {
         } catch (error) {
             setShowListingsError(error.message);
         }
-    }
+    };
 
+    const handleDeleteListing = async (listingId) => {
+        try {
+            const res = await fetch(`/api/listing/delete/${listingId}`, {
+                method: 'DELETE',
+            })
+            const data = await res.json();
+            if (data.success == false) {
+                console.log(data.message);
+                return;
+            }
+            setListings((prev) =>
+                prev.filter((listing) => { return listing._id != listingId }));
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+    function handleEditListing(listingId) {
+        navigate(`/api/edit-listing/${listingId}`);
+    }
 
     return (
         <div className='p-3 max-w-lg mx-auto'>
@@ -164,7 +184,7 @@ export default function Profile() {
                 <div className='flex flex-col gap-4'>
                     <h1 className='text-center mt-7 text-2xl' >Your Listings</h1>
                     {
-                        listings.map((listing, index) => {
+                        listings.map((listing) => {
                             return <div key={listing._id} className='gap-4 border rounded-lg p-3 flex justify-between items-center'>
                                 <Link to={`/listing/${listing._id}`}>
                                     <img src={listing.imageUrls[0]} alt='listing-image' className='h-16 w-16 object-contain rounded-sm'></img>
@@ -173,8 +193,8 @@ export default function Profile() {
                                     <p>{listing.name}</p>
                                 </Link>
                                 <div className='flex flex-col items-center'>
-                                    <button className='text-red-700'>Delete</button>
-                                    <button className='text-green-700'>Edit</button>
+                                    <button onClick={() => handleDeleteListing(listing._id)} className='text-red-700'>Delete</button>
+                                    <button onClick={() => handleEditListing(listing._id)} className='text-green-700'>Edit</button>
                                 </div>
                             </div>
                         })
