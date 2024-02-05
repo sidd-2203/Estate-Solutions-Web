@@ -31,10 +31,10 @@ export const updateListing = async (req, res, next) => {
         if (!listing) {
             return next(errorHandler(404, 'Listing not found'));
         }
-        if (listing.params.id != req.user.id) {
+        if (listing.userRef.toString() != req.user.id) {
             return next(errorHandler(401, 'You are only allowed to edit your own listing'));
         }
-        const updatedListing = Listing.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedListing = await Listing.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.status(200).json(updatedListing);
 
     } catch (error) {
