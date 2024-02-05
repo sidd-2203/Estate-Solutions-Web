@@ -24,3 +24,32 @@ export const deleteListing = async (req, res, next) => {
         next(error);
     }
 }
+
+export const updateListing = async (req, res, next) => {
+    try {
+        const listing = await Listing.findById(req.params.id);
+        if (!listing) {
+            return next(errorHandler(404, 'Listing not found'));
+        }
+        if (listing.params.id != req.user.id) {
+            return next(errorHandler(401, 'You are only allowed to edit your own listing'));
+        }
+        const updatedListing = Listing.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.status(200).json(updatedListing);
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const getListing = async (req, res, next) => {
+    try {
+        const listing = await Listing.findById(req.params.id);
+        if (!listing) {
+            return next(errorHandler(404, 'Listing not found'));
+        }
+        return res.status(200).json(listing);
+    } catch (error) {
+        next(error);
+    }
+}
