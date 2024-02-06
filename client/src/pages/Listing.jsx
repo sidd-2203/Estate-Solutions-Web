@@ -9,12 +9,13 @@ import {
     FaBath,
     FaBed,
     FaChair,
-    FaMapMarkedAlt,
     FaMapMarkerAlt,
     FaParking,
     FaShare,
 }
     from 'react-icons/fa';
+
+import Contact from '../components/Contact';
 
 
 
@@ -135,8 +136,10 @@ export default function Listing() {
                                         listing.furnished ? 'Furnished' : 'Unfurnished'
                                     }
                                 </li>
-
                             </ul>
+                            {
+                                <Contact listing={listing} />
+                            }
                         </div>
                     </div>
 
