@@ -23,12 +23,12 @@ export default function SearchBox() {
     }
     return (
         <>
-            <form onClick={handleSubmit} className='bg-slate-100 p-3 rounded-lg flex items-center'  >
+            <form className='bg-slate-100 p-3 rounded-lg flex items-center'  >
                 <input type='text' placeholder='Search...'
                     onChange={(e) => setSearchVal(e.target.value)}
                     value={searchVal}
                     className='bg-transparent focus:outline-none w-24 sm:w-64' />
-                <button>
+                <button onClick={handleSubmit}>
                     <FaSearch className='text-slate-600 ' />
                 </button>
             </form>
