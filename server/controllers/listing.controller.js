@@ -63,13 +63,13 @@ export const getListings = async (req, res, next) => {
         let parking = req.query.parking;
         let type = req.query.type;
 
-        if (offer === undefined || offer === false) {
+        if (offer === undefined || offer === 'false') {
             offer = { $in: [false, true] };
         }
-        if (furnished === undefined || furnished === false) {
+        if (furnished === undefined || furnished === 'false') {
             furnished = { $in: [false, true] };
         }
-        if (parking === undefined || parking === false) {
+        if (parking === undefined || parking === 'false') {
             parking = { $in: [false, true] };
         }
         if (type === undefined || type === 'all') {
@@ -89,10 +89,7 @@ export const getListings = async (req, res, next) => {
         }).sort({
             [sort]: order
         }).limit(limit).skip(startIndex);
-
         return res.status(200).json(listing);
-
-
     } catch (error) {
         next(error);
     }
