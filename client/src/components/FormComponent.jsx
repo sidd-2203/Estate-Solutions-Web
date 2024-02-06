@@ -157,8 +157,10 @@ export default function FormComponent({ formData, setFormData, params }) {
                                 <input type='number' id='discountPrice' required onChange={handleInput} value={formData.discountPrice} className='p-3 border-gray-300 rounded-lg'></input>
                                 <div className='flex flex-col items-center '>
                                     <p>Discounted Price</p>
-                                    <span className='text-xs'> Rs/month</span>
-                                </div>
+                                    {
+                                        formData.type == 'rent' &&
+                                        <span className='text-xs'> Rs/month</span>
+                                    }</div>
                             </div>
 
                         }
