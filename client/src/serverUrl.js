@@ -1,0 +1,1 @@
+export default serverurl = "https://esatate-solutions.onrender.com/"

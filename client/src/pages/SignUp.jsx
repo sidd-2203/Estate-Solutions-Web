@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Link, Navigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import serverUrl from '../serverUrl';
 export default function SignUp() {
     const [formData, setformData] = useState({});
     const [error, setError] = useState(null);
@@ -18,7 +19,7 @@ export default function SignUp() {
         e.preventDefault();
         try {
             setLoading(true);
-            const res = await (fetch('/api/auth/signup',
+            const res = await (fetch(serverUrl + '/api/auth/signup',
                 {
                     method: 'POST',
                     headers: {

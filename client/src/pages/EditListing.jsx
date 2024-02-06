@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import FormComponent from '../components/FormComponent.jsx';
 
+import serverUrl from '../serverUrl.js';
 export default function EditListing() {
     const [formData, setFormData] = useState({
         imageUrls: [],
@@ -25,7 +26,7 @@ export default function EditListing() {
         // the main callback of the useEffect cannot be an asyc function
         // so we create inside it
         const fetechListing = async () => {
-            const res = await fetch(`/api/listing/get/${params.listingId}`);
+            const res = await fetch(`${serverUrl}/api/listing/get/${params.listingId}`);
             const data = await res.json();
             if (data.success == false) {
                 console.log(data.message);

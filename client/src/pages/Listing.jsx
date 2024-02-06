@@ -16,6 +16,7 @@ import {
     from 'react-icons/fa';
 
 import Contact from '../components/Contact';
+import serverUrl from '../serverUrl';
 
 
 
@@ -29,7 +30,7 @@ export default function Listing() {
     useEffect(() => {
         try {
             const fetchListing = async () => {
-                const res = await fetch(`/api/listing/get/${params.listingId}`);
+                const res = await fetch(serverUrl + `/api/listing/get/${params.listingId}`);
                 const data = await res.json();
                 if (data.success == false) {
                     setLoading(false);
