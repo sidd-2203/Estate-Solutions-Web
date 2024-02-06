@@ -20,7 +20,7 @@ export const updateUser = async (req, res, next) => {
             }
         }, { new: true }); // returns the updated user info in response
         const { password, ...rest } = updatedUser._doc;
-        res.clearCookie('access_token');
+        // res.clearCookie('access_token');
         res.status(200).json({ ...rest, success: true });
     }
     catch (err) {

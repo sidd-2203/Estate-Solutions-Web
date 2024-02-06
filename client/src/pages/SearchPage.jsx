@@ -6,6 +6,7 @@ export default function Search() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [listing, setListing] = useState([]);
+    const [showMore, setshowMore] = useState(false);
     const [sidebarData, setsidebarData] = useState({
         searchTerm: '',
         type: 'all',
@@ -44,6 +45,8 @@ export default function Search() {
                 const res = await fetch(`/api/listing/get/?${searchQuery}`);
                 const data = await res.json();
                 setListing(data);
+                if (data.length > 8) setshowMore(true);
+                else setshowMore(false);
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -82,6 +85,21 @@ export default function Search() {
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
     }
+    const showMoreClick = async () => {
+        const numberOfListing = listing.length;
+        const startIndex = numberOfListing;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex', startIndex);
+        const searchQuery = urlParams.toString();
+        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const data = await res.json();
+        if (data.length < 9) {
+            setshowMore(false);
+        }
+        // add new listings to the prev listings 
+        // main pagination
+        setListing([...listing, ...data]);
+    }
 
     return (
         <div className='flex flex-col md:flex-row' >
@@ -100,7 +118,7 @@ export default function Search() {
                         <label className='font-semibold'>Type: </label>
                         <div className='flex gap-2'>
                             <input type='checkbox'
-                                id='rent'
+                                id='all'
                                 checked={sidebarData.type === 'all'}
                                 onChange={handleChange}
                                 className='w-5' ></input>
@@ -179,6 +197,7 @@ export default function Search() {
                             return <ListingItems key={eachListing._id} listing={eachListing}></ListingItems>
                         })
                     }
+                    {showMore && <button className='text-green-700 hover:underline p-7 text-center w-full' onClick={showMoreClick}>Show More</button>}
                 </div>
             </div>
         </div>
