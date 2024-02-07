@@ -31,6 +31,7 @@ export const signIn = async (req, res, next) => {
         const { password: pass, ...restInfo } = validUser._doc;
 
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
         res.cookie('access_token', token, { httpOnly: true, SameSite: false, Secure: true, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) }).status(200).json(restInfo);
     } catch (err) {
         next(errorHandler(501, err.message));
@@ -46,6 +47,7 @@ export const googleSignIn = async (req, res, next) => {
         if (user) {
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = user._doc;
+            res.setHeader('Access-Control-Allow-Credentials', 'true');
             res.cookie('access_token',
                 token, {
                 httpOnly: true,
@@ -63,6 +65,7 @@ export const googleSignIn = async (req, res, next) => {
             const user = await newUser.save();
             const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = user._doc;
+            res.setHeader('Access-Control-Allow-Credentials', 'true');
             res.cookie('access_token',
                 token, {
                 httpOnly: true,
