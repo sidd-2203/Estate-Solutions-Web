@@ -31,7 +31,7 @@ export const signIn = async (req, res, next) => {
         const { password: pass, ...restInfo } = validUser._doc;
 
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
-        res.cookie('access_token', token, { httpOnly: true, SameSite: false, Secure, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) }).status(200).json(restInfo);
+        res.cookie('access_token', token, { httpOnly: true, SameSite: false, Secure: true, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) }).status(200).json(restInfo);
     } catch (err) {
         next(errorHandler(501, err.message));
     }
@@ -49,6 +49,8 @@ export const googleSignIn = async (req, res, next) => {
             res.cookie('access_token',
                 token, {
                 httpOnly: true,
+                SameSite: false,
+                Secure: true,
                 maxAge: new Date(Date.now() + 24 * 60 * 60 * 1000)
             })
                 .status(200)
@@ -64,7 +66,8 @@ export const googleSignIn = async (req, res, next) => {
             res.cookie('access_token',
                 token, {
                 httpOnly: true,
-                SameSite: false, Secure,
+                SameSite: false,
+                Secure: true,
                 maxAge: new Date(Date.now() + 24 * 60 * 60 * 1000)
             })
                 .status(200)
