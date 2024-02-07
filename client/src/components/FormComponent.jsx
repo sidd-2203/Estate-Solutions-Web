@@ -3,7 +3,6 @@ import UploadImageComponent from '../components/UploadImageComponent.jsx';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import serverUrl from '../serverUrl.js';
 export default function FormComponent({ formData, setFormData, params }) {
 
     const [uploading, setUploading] = useState(false);
@@ -19,7 +18,7 @@ export default function FormComponent({ formData, setFormData, params }) {
             if (+formData.regularPrice < +formData.discountPrice) return setError("Discount Price must be less than regular price");
             setLoading(true);
             setError(false);
-            const res = await fetch(`${serverUrl}/api/listing/update/${params.listingId}`, {
+            const res = await fetch(`/api/listing/update/${params.listingId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +47,7 @@ export default function FormComponent({ formData, setFormData, params }) {
             if (+formData.regularPrice < +formData.discountPrice) return setError("Discount Price must be less than regular price");
             setLoading(true);
             setError(false);
-            const res = await fetch(`${serverUrl}/api/listing/create`, {
+            const res = await fetch(`/api/listing/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

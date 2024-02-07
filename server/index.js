@@ -1,34 +1,45 @@
-import express, { Router } from "express";
+import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import { listingRouter } from "./routes/listing.route.js";
-import cors from 'cors';
+import path from 'path';
 
 dotenv.config();
+
+
+mongoose.connect(process.env.MONGO_URL).then(() => {
+    console.log("Connected to MongoDB");
+}).catch((err) => {
+    console.log(err)
+})
+
+
+
 const app = express();
 const PORT = 3000;
 
+const __dirname = path.resolve();
 
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Headers', 'X-PINGOTHER, Content-Type');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
-    res.header('Access-Control-Allow-Origin', 'https://estate-solutions-frontend.onrender.com');
-    next();
-});
-
-
-app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+
+app.listen(PORT, () => {
+    console.log(`App is running on port ${PORT}`);
+})
 
 app.use("/api/user", userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
+// code for deploying on the render to create a static folder so that can access index.html from frontend
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
 
 
 // global catch
@@ -43,20 +54,5 @@ app.use((err, req, res, next) => {
         message
     });
 })
-
-
-
-
-mongoose.connect(process.env.MONGO_URL).then(() => {
-    console.log("Connected to MongoDB");
-}).catch((err) => {
-    console.log(err)
-})
-app.listen(PORT, () => {
-    console.log(`App is running on port ${PORT}`);
-})
-
-
-
 
 

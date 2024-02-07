@@ -6,9 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://esatate-solutions.onrender.com/',
-        secure: true,
-        changeOrigin: true,
+        target: 'http://localhost:3000',
+        secure: false,
       }
     }
   },

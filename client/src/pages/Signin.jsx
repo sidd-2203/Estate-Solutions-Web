@@ -4,25 +4,28 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInStart, signInFailure, signInSuccess } from '../redux/user/userSlice.js';
 import OAuth from '../components/OAuth.jsx';
-import serverUrl from '../serverUrl.js';
 
 export default function Signin() {
     const [formData, setformData] = useState({});
     const { loading, error } = useSelector((state) => state.user);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
     const handleChange = (e) => {
         setformData({
             ...formData,
             [e.target.id]: e.target.value,
         });
     }
+
     const handleSubmit = async (e) => {
         // to prevent refresh the page after submitting the value
         e.preventDefault();
         try {
             dispatch(signInStart());
-            const res = await (fetch(serverUrl + '/api/auth/signin',
+            const res = await (fetch('/api/auth/signin',
                 {
                     method: 'POST',
                     headers: {

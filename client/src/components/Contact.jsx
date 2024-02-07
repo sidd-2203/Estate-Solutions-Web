@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import serverUrl from '../serverUrl';
 export default function Contact({ listing }) {
     const { currentUser } = useSelector((state) => state.user);
     const [contact, setContact] = useState(false);
@@ -10,7 +9,7 @@ export default function Contact({ listing }) {
     const [message, setMessage] = useState('');
     useEffect(() => {
         async function fetchLanLord() {
-            const res = await fetch(`${serverUrl}/api/user/get/${listing.userRef}`);
+            const res = await fetch(`/api/user/get/${listing.userRef}`);
             const data = await res.json();
             setLandLoard(data);
             //console.log(LandLord);
