@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 export default function Contact({ listing }) {
     const { currentUser } = useSelector((state) => state.user);

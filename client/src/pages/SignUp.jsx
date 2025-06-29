@@ -27,14 +27,14 @@ export default function SignUp() {
                     body: JSON.stringify(formData)
                 }));
             const data = await res.json();
-            if (data.success == false) {
+            if (!data.success) {
                 setLoading(false);
                 setError(data.message);
                 return;
             }
             setLoading(false);
             setError(null);
-            console.log(data);
+            //console.log(data);
             navigate('/sign-in');
         } catch (err) {
             setLoading(false);

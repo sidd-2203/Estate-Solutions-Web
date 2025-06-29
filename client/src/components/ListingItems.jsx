@@ -21,7 +21,7 @@ export default function ListingItems({ listing }) {
                             // 50000 -> 50,000
                             listing.offer ? listing.discountPrice.toLocaleString('en-US') : listing.regularPrice.toLocaleString('en-US')
                         }
-                        {listing.type == 'rent' ? '/ month' : ''}
+                        {listing.type === 'rent' ? '/ month' : ''}
                     </p>
                     <div className='text-slate-700 flex gap-4'>
                         <div className='font-bold text-xs'>

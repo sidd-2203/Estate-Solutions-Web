@@ -67,7 +67,7 @@ export default function Profile() {
                 body: JSON.stringify(formData),
             });
             const data = await res.json();
-            if (data.success == false) {
+            if (!data.success)  {
                 dispatch(updateFailure(data.message));
                 return;
             }
@@ -84,7 +84,7 @@ export default function Profile() {
                 method: 'DELETE',
             });
             const data = await res.json();
-            if (data.success == false) {
+            if (!data.success) {
                 dispatch(deleteFailure(data.message));
                 return;
             }
@@ -99,7 +99,7 @@ export default function Profile() {
             dispatch(signOutUserStart());
             const res = await fetch(`/api/auth/signout`);
             const data = await res.json();
-            if (data.success == false) {
+            if (!data.success) {
                 dispatch(signOutFailure(data.message));
                 return;
             }
@@ -113,7 +113,7 @@ export default function Profile() {
         try {
             const res = await fetch(`/api/user/listings/${currentUser._id}`);
             const data = await res.json();
-            if (data.success == false) {
+            if (!data.success) {
                 setShowListingsError(data.message);
                 return;
             }
@@ -131,14 +131,14 @@ export default function Profile() {
                 method: 'DELETE',
             })
             const data = await res.json();
-            if (data.success == false) {
-                console.log(data.message);
+            if (!data.success) {
+                //console.log(data.message);
                 return;
             }
             setListings((prev) =>
-                prev.filter((listing) => { return listing._id != listingId }));
+                prev.filter((listing) => { return listing._id !== listingId }));
         } catch (error) {
-            console.log(error.message);
+            //console.log(error.message);
         }
     }
     function handleEditListing(listingId) {

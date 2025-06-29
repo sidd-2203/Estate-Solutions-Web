@@ -13,7 +13,7 @@ dotenv.config();
 mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("Connected to MongoDB");
 }).catch((err) => {
-    console.log(err)
+    //console.log(err)
 })
 
 
@@ -45,7 +45,7 @@ app.get('*', (req, res) => {
 // global catch
 // error handling middleware
 
-app.use((err, req, res, next) => {
+app.use((err, req, res,_) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || "Internal Server Error";
     return res.status(statusCode).json({

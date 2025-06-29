@@ -22,7 +22,7 @@ export default function UploadImageComponent({ formData, setFormData, setUploadi
                 setUploading(false);
                 setImageUploadError(false);
             }).catch((err) => {
-                console.log(err);
+                //console.log(err);
                 setUploading(false);
                 setImageUploadError('Image Upload Failed (2MB max per Image)');
             });

@@ -1,6 +1,5 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import UploadImageComponent from '../components/UploadImageComponent.jsx';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 export default function FormComponent({ formData, setFormData, params }) {
@@ -11,7 +10,7 @@ export default function FormComponent({ formData, setFormData, params }) {
     const { currentUser } = useSelector((state) => state.user);
     const navigate = useNavigate();
 
-    const handleUpdate = async (e) => {
+    const handleUpdate = async () => {
         try {
             if (formData.imageUrls.length < 1) return setError('You must upload atleast one image!!');
             // + sign to convert to number
@@ -30,7 +29,7 @@ export default function FormComponent({ formData, setFormData, params }) {
             });
             const data = await res.json();
             setLoading(false);
-            if (data.success == false) {
+            if (!data.success ) {
                 setError(data.message);
             }
             navigate(`/listing/${params.listingId}`);
@@ -40,7 +39,7 @@ export default function FormComponent({ formData, setFormData, params }) {
             setLoading(false);
         }
     }
-    const handleCreate = async (e) => {
+    const handleCreate = async () => {
         try {
             if (formData.imageUrls.length < 1) return setError('You must upload atleast one image!!');
             // + sign to convert to number
@@ -59,7 +58,7 @@ export default function FormComponent({ formData, setFormData, params }) {
             });
             const data = await res.json();
             setLoading(false);
-            if (data.success == false) {
+            if (!data.success) {
                 setError(data.message);
             }
             navigate(`/listing/${data._id}`);
@@ -73,25 +72,24 @@ export default function FormComponent({ formData, setFormData, params }) {
         e.preventDefault();
         if (params) {
             // this is update
-            handleUpdate(e);
+            handleUpdate();
         }
         else {
             // this is create
-            handleCreate(e);
-
+            handleCreate();
         }
 
 
     }
 
     const handleInput = (e) => {
-        if (e.target.id == 'sale' || e.target.id == 'rent') {
+        if (e.target.id === 'sale' || e.target.id === 'rent') {
             setFormData({
                 ...formData,
                 type: e.target.id
             })
         }
-        else if (e.target.id == 'parking' || e.target.id == 'furnished' || e.target.id == 'offer') {
+        else if (e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer') {
             setFormData({
                 ...formData,
                 [e.target.id]: e.target.checked,
@@ -147,7 +145,7 @@ export default function FormComponent({ formData, setFormData, params }) {
                             <input type='number' id='regularPrice' onChange={handleInput} value={formData.regularPrice} required className='p-3 border-gray-300 rounded-lg'></input>
                             <div className='flex flex-col items-center '>
                                 <p>Regular price</p>
-                                {formData.type == 'rent' &&
+                                {formData.type === 'rent' &&
                                     <span className='text-xs'> Rs/month</span>
                                 }</div>
                         </div>
@@ -157,7 +155,7 @@ export default function FormComponent({ formData, setFormData, params }) {
                                 <div className='flex flex-col items-center '>
                                     <p>Discounted Price</p>
                                     {
-                                        formData.type == 'rent' &&
+                                        formData.type === 'rent' &&
                                         <span className='text-xs'> Rs/month</span>
                                     }</div>
                             </div>

@@ -31,9 +31,9 @@ export default function Search() {
             setsidebarData({
                 searchTerm: searchTermFromUrl || '',
                 type: typeFromUrl || 'all',
-                furnished: furnishedFromUrl == 'true' ? true : false,
-                offer: offerFromUrl == 'true' ? true : false,
-                parking: parkingFromUrl == 'true' ? true : false,
+                furnished: furnishedFromUrl === 'true' ? true : false,
+                offer: offerFromUrl === 'true' ? true : false,
+                parking: parkingFromUrl === 'true' ? true : false,
                 order: orderFromUrl || 'desc',
                 sort: sortFromUrl || 'createdAt',
             })
@@ -57,14 +57,14 @@ export default function Search() {
         fetchListing();
     }, [location.search])
     const handleChange = (e) => {
-        if (e.target.id == 'all' || e.target.id == 'rent' || e.target.id == 'sale') {
+        if (e.target.id === 'all' || e.target.id === 'rent' || e.target.id === 'sale') {
             setsidebarData({ ...sidebarData, type: e.target.id });
         }
         if (e.target.id === 'searchTerm') {
             setsidebarData({ ...sidebarData, searchTerm: e.target.value });
         }
         if (e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer') {
-            setsidebarData({ ...sidebarData, [e.target.id]: (e.target.checked || e.target.checked == 'true') ? true : false })
+            setsidebarData({ ...sidebarData, [e.target.id]: (e.target.checked || e.target.checked === 'true') ? true : false })
         }
         if (e.target.id === 'sort_order') {
             const sort = e.target.value.split('_')[0] || 'createdAt';
